@@ -1,0 +1,21 @@
+# Local agent skills/settings and PDF preparation tools are not application source.
+/.agents/
+/.codex/
+/.impeccable/
+/.codex-pdf-tools/
+/tmp/
+
+# Real environment files, credentials, databases, and local runtime files stay local.
+**/.env*
+!**/.env.example
+**/auth.json
+**/*.pem
+**/*.key
+**/*.sqlite
+**/*.sqlite-*
+**/*.sql
+**/vendor/
+**/node_modules/
+**/*.log
+.DS_Store
+Thumbs.db

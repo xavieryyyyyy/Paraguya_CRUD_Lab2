@@ -1,0 +1,846 @@
+/*
+ * Include padding and borders in element widths.
+ */
+* {
+    box-sizing: border-box;
+}
+
+/*
+ * Reserve scrollbar space in both themes. Otherwise a newly appearing vertical scrollbar can
+ * narrow the page just enough to push a flex item to the next row.
+ */
+html {
+    scrollbar-gutter: stable;
+}
+
+/*
+ * Page foundation: remove default outer margin, fill at least the viewport height, and leave
+ * breathing room around the content. 100vh means the viewport height. The charcoal radial
+ * gradient gives subtle lighting. Inter is loaded in the shared Blade layout. color-scheme
+ * themes native controls.
+ */
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 54px 5.4% 80px;
+    color: #f5f5f7;
+    background: radial-gradient(
+        ellipse at top,
+        #30333b 0%,
+        #16181d 42%,
+        #08090b 85%
+    );
+    /*
+ * Both themes use Inter. Buttons and inputs use font: inherit below, so they also use Inter.
+ * system-ui and Segoe UI are fallbacks if the download fails.
+ */
+    font-family: "Inter", system-ui, "Segoe UI", sans-serif;
+    font-optical-sizing: auto;
+    line-height: 1.5;
+    font-size: 15px;
+    color-scheme: dark;
+}
+
+/*
+ * Shared dark glass surfaces.
+ */
+/*
+ * Apply one shared surface rule to both selectors. max-width limits wide-screen content;
+ * margin: 0 auto centers it. rgba alpha creates translucency, blur filters the background
+ * behind the panel, and the border/shadow establish depth. -webkit-backdrop-filter supports
+ * browsers using the prefixed property. Browsers without blur support still get the dark
+ * translucent surface.
+ */
+.navbar,
+/*
+ * Padding is space inside the main panel, between its border and its contents.
+ */
+.glass-panel {
+    max-width: 1200px;
+    margin: 0 auto;
+    /*
+ * Two backgrounds: a gentle silver reflection over a translucent dark base. The top-left is
+ * brighter, like light reflecting along the reference glass.
+ */
+    background: linear-gradient(125deg, rgba(210, 220, 240, 0.13),
+        rgba(120, 130, 150, 0.02) 48%, rgba(190, 200, 220, 0.07)),
+        rgba(18, 21, 27, 0.64);
+    border: 1px solid rgba(200, 210, 230, 0.45);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    /*
+ * inset places thin highlights INSIDE the panel; the last shadow sits below it.
+ */
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18),
+        inset 0 -1px 10px rgba(180, 195, 225, 0.07),
+        0 18px 44px rgba(0, 0, 0, 0.32);
+}
+
+/*
+ * Flexbox puts the brand and lab label on one row. space-between separates them; align-items
+ * centers them vertically. gap adds spacing between children.
+ */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 32px;
+    margin-bottom: 26px;
+}
+
+/*
+ * Style the navigation link as the product title rather than a default underlined link.
+ */
+.brand {
+    color: #f5f5f7;
+    font-size: 22px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/*
+ * Grouped selectors share a secondary text color while keeping headings brighter.
+ */
+.navbar span,
+.page-header p,
+/*
+ * Compact spacing for the product count below the rows.
+ */
+.table-footer {
+    color: #c1c7d2;
+}
+
+.glass-panel {
+    padding: 28px;
+}
+
+/*
+ * Arrange heading and primary action together. flex-wrap lets the button move below the
+ * heading when space is limited instead of overflowing.
+ */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/*
+ * Let the heading area give up width before squeezing the action button. At small widths the
+ * whole button can still move below the heading as intended.
+ */
+.page-header > div {
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+/*
+ * Set the heading hierarchy. line-height controls line spacing; em tracking is relative to
+ * the current font size. A small negative value tightens lettering.
+ */
+h1 {
+    /*
+ * The same Inter family is used for headings and body text. Weight and spacing create
+ * hierarchy without introducing another typeface.
+ */
+    font-family: inherit;
+    margin: 0;
+    font-size: 38px;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+}
+
+/*
+ * Keep the descriptive sentence close to its heading.
+ */
+.page-header p {
+    margin: 2px 0 0;
+    font-size: 17px;
+}
+
+/*
+ * Shared button appearance for links and submit buttons. inline-flex aligns text/icons;
+ * font: inherit uses the page typeface. The short transition only animates background color
+ * when it changes, such as during hover.
+ */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /*
+ * Keep the icon and label together. These sizing rules are shared by both themes; changing a
+ * theme should change colors, not break a button label.
+ */
+    flex-shrink: 0;
+    white-space: nowrap;
+    line-height: 1.5;
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 150ms ease-out;
+}
+
+/*
+ * Blue marks the main action; the light text and visible border contrast with the dark
+ * surface.
+ */
+.button-primary {
+    color: #ffffff;
+    /*
+ * The brighter top and darker bottom give the blue button a glass-like finish.
+ */
+    background: linear-gradient(165deg, #2276dd, #1236a9);
+    border-color: #6ca5ff;
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.25),
+        0 5px 14px rgba(0, 0, 0, 0.2);
+}
+
+/*
+ * The :hover pseudo-class supplies pointer feedback without changing the action.
+ */
+.button-primary:hover {
+    background: linear-gradient(165deg, #3286ed, #1947bc);
+}
+
+/*
+ * Green feedback indicates a successful save/update/delete. This styles the session message;
+ * it does not determine whether a database operation succeeds.
+ */
+.success-message {
+    margin-bottom: 18px;
+    padding: 15px 20px;
+    color: #9cf0bc;
+    background: linear-gradient(110deg, rgba(10, 65, 43, 0.36), rgba(10, 45, 36, 0.25));
+    border: 1px solid #458d69;
+    border-radius: 11px;
+}
+
+/*
+ * Scroll the table horizontally on small screens.
+ */
+/*
+ * overflow-x: auto adds a local horizontal scrollbar only when the table is wider than its
+ * container. Users can scroll columns without widening the page.
+ */
+.table-container {
+    overflow-x: auto;
+    background: rgba(9, 12, 17, 0.55);
+    border: 1px solid #414650;
+    border-radius: 11px;
+    /*
+ * Keep the scrollbar muted instead of a bright browser-default track.
+ */
+    scrollbar-color: #657080 #171b22;
+    scrollbar-width: thin;
+}
+
+/*
+ * The table fills its wrapper but keeps a readable minimum width. border-collapse joins
+ * adjoining borders; tabular-nums aligns numerical digits.
+ */
+table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Use the same cell padding, alignment, and divider line for labels and values.
+ */
+th,
+/*
+ * Long unbroken content can wrap, preventing a long description from stretching the table
+ * unnecessarily.
+ */
+td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(180, 195, 220, 0.1);
+}
+
+/*
+ * Distinguish the column headings with a slightly brighter surface and heavier text.
+ */
+th {
+    color: #cbd0db;
+    background: linear-gradient(110deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.025));
+    font-weight: 600;
+    font-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+td {
+    overflow-wrap: anywhere;
+}
+
+/*
+ * A subtle row highlight helps the user track which record they are pointing at.
+ */
+tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/*
+ * Keep Edit and Delete on one row, separated by gap. nowrap prevents labels breaking.
+ */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    white-space: nowrap;
+}
+
+/*
+ * Remove any form margin so the delete form aligns neatly beside the edit link.
+ */
+.actions form {
+    margin: 0;
+    /*
+ * A thin separator between Edit and Delete matches the reference actions.
+ */
+    padding-left: 18px;
+    border-left: 1px solid rgba(190, 205, 230, 0.18);
+}
+
+/*
+ * Blue text distinguishes the secondary Edit action without competing with Add Product.
+ */
+.edit-link {
+    color: #82b7ff;
+    text-decoration: none;
+}
+
+/*
+ * Remove the native button box, keep real button semantics, and use coral to distinguish
+ * deletion. The label and icon also communicate its purpose.
+ */
+.delete-button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #ff938a;
+    font: inherit;
+    cursor: pointer;
+}
+
+/*
+ * Underline action labels on hover to reinforce that they are interactive.
+ */
+.edit-link:hover,
+.delete-button:hover {
+    text-decoration: underline;
+}
+
+.table-footer {
+    margin: 0;
+    padding: 11px 16px;
+    font-size: 13px;
+}
+
+/*
+ * A visible keyboard focus ring helps users find the current link/button when pressing Tab.
+ * outline does not change the element layout like a border can.
+ */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #a5c9ff;
+    outline-offset: 4px;
+}
+
+/*
+ * Theme text highlighting when the user selects page text.
+ */
+::selection {
+    color: #ffffff;
+    background: #1859d9;
+}
+
+/*
+ * Responsive rules apply when the viewport is 600 CSS pixels wide or less. Reduce padding
+ * and type sizes and allow the navbar to wrap. Existing table scrolling and form-button
+ * wrapping handle the remaining narrow-screen layout.
+ */
+@media (max-width: 600px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .navbar,
+    .glass-panel {
+        padding: 20px;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    .brand {
+        font-size: 20px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+}
+
+/*
+ * Respect the operating-system reduced-motion preference by disabling the button transition.
+ */
+@media (prefers-reduced-motion: reduce) {
+    .button {
+        transition: none;
+    }
+}
+
+/*
+ * Product forms
+ */
+/*
+ * Keep forms readable instead of stretching the inputs across a large desktop screen.
+ */
+.product-form {
+    max-width: 640px;
+}
+
+/*
+ * Separate each label/input group from the next group.
+ */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/*
+ * Display labels above their inputs, with a small gap and slightly stronger weight.
+ */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/*
+ * Inputs and textareas share full-width dark surfaces. The global border-box rule includes
+ * their padding in width: 100%. caret-color colors the typing cursor.
+ */
+.form-group input,
+/*
+ * Allow vertical resizing without letting the textarea stretch the form sideways.
+ */
+.form-group textarea {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    color: #f5f5f7;
+    background: rgba(13, 15, 20, 0.8);
+    border: 1px solid #555b68;
+    border-radius: 10px;
+    font: inherit;
+    caret-color: #a5c9ff;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+/*
+ * Show which field has focus while typing or navigating with the keyboard.
+ */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: 2px solid #a5c9ff;
+    outline-offset: 2px;
+    border-color: #82b7ff;
+}
+
+/*
+ * Group Save/Update and Cancel. flex-wrap lets them stack when they cannot fit on one row.
+ */
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+/*
+ * A quieter neutral color distinguishes Cancel from the primary submit action.
+ */
+.button-secondary {
+    color: #f5f5f7;
+    background: #30343e;
+    border-color: #555b68;
+}
+
+/*
+ * Pointer feedback for the Cancel link.
+ */
+.button-secondary:hover {
+    background: #404652;
+}
+
+/*
+ * Coral error feedback is separate from green success feedback; the text explains the
+ * problem so color is not the only signal. Validation itself is in the controller.
+ */
+.error-message {
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    color: #ffb4ad;
+    background: rgba(100, 30, 30, 0.3);
+    border: 1px solid #a65353;
+    border-radius: 12px;
+}
+
+/*
+ * Remove the paragraph default margin to control the alert spacing.
+ */
+.error-message p {
+    margin: 0;
+}
+
+/*
+ * Keep the list of errors inside the alert without extra bottom space.
+ */
+.error-message ul {
+    margin-bottom: 0;
+}
+
+/*
+ * Align outline icons with their labels.
+ */
+/*
+ * Align decorative SVG icons and their text labels using inline flexbox.
+ */
+.brand,
+.edit-link,
+.delete-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/*
+ * Add spacing between the icon and label while retaining earlier button styling.
+ */
+.button {
+    gap: 8px;
+}
+
+/*
+ * Use one consistent icon size. flex-shrink: 0 prevents squeezing its width when it sits
+ * beside longer text in a narrow flex container.
+ */
+.icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/*
+ * The descendant selector enlarges only the icon inside the brand link.
+ */
+.brand .icon {
+    width: 26px;
+    height: 26px;
+}
+
+/*
+ * A later rule adds icon/text alignment to the existing success-message style. CSS combines
+ * non-conflicting declarations from both rules (the cascade).
+ */
+.success-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/*
+ * Navbar tools: the divider belongs between the lab label and the theme control. This button
+ * is a real action, not an unclickable decorative sun.
+ */
+.navbar-tools {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+}
+
+.theme-toggle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    /*
+ * Equal dimensions in both themes prevent navbar height shifting on toggle.
+ */
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    color: #e9edf5;
+    cursor: pointer;
+}
+
+/*
+ * Draw the divider on the tool group, separate from the round theme button. A positioned
+ * decoration does not change the button width or move either icon. This keeps the |
+ * separator visible in the same place in both themes.
+ */
+.navbar-tools {
+    position: relative;
+}
+
+.navbar-tools::after {
+    content: "";
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    width: 1px;
+    height: 24px;
+    transform: translateY(-50%);
+    background: rgba(190, 205, 230, 0.3);
+    pointer-events: none;
+}
+
+.light-theme .navbar-tools::after {
+    background: rgba(85, 103, 137, 0.35);
+}
+
+.theme-toggle:hover {
+    color: #a5c9ff;
+}
+
+.theme-toggle .icon {
+    width: 24px;
+    height: 24px;
+}
+
+/*
+ * Show the sun in dark mode and the moon in light mode. theme.js adds/removes light-theme on
+ * body; these ordinary selectors do the rest.
+ */
+.moon-icon,
+.light-theme .sun-icon {
+    display: none;
+}
+
+.light-theme .moon-icon {
+    display: block;
+}
+
+/*
+ * A narrow screen needs smaller margins, but the glass materials stay the same. This later
+ * media query preserves the responsive layout from the first version.
+ */
+@media (max-width: 600px) {
+    body {
+        padding: 24px 14px 40px;
+    }
+
+    .navbar,
+    .glass-panel {
+        padding: 20px;
+    }
+
+    .navbar-tools {
+        gap: 12px;
+    }
+
+    /*
+ * Center the divider in the smaller mobile gap: 40px button + half of 12px.
+ */
+    .navbar-tools::after {
+        right: 46px;
+    }
+
+    .page-header p {
+        font-size: 15px;
+    }
+}
+
+/*
+ * LIGHT THEME: override only colors/materials, reusing all layout and form rules. Descendant
+ * selectors mean these values apply only while body has light-theme.
+ */
+body.light-theme {
+    color: #202632;
+    /*
+ * Neutral pearl and graphite lighting replaces the colored wallpaper. A darker lower-right
+ * background shows through clear glass, while the broad upper light creates a soft silver
+ * reflection. No image download is needed.
+ */
+    background:
+        radial-gradient(ellipse at 25% 0%, rgba(255, 255, 255, 0.76), transparent 58%),
+        radial-gradient(ellipse at 95% 95%, rgba(106, 113, 126, 0.25), transparent 60%),
+        linear-gradient(135deg, #d9dce2, #c9ced7 52%, #adb5c2);
+    background-attachment: fixed;
+    color-scheme: light;
+}
+
+.light-theme .navbar,
+.light-theme .glass-panel {
+    /*
+ * White along opposite edges suggests reflected light; the center stays clear. Saturation
+ * strengthens the backdrop colors seen through the blurred material.
+ */
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.65),
+            rgba(255, 255, 255, 0.12) 38%, rgba(255, 255, 255, 0.08) 65%,
+            rgba(255, 255, 255, 0.4)), rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(24px) saturate(145%);
+    -webkit-backdrop-filter: blur(24px) saturate(145%);
+    border-color: rgba(255, 255, 255, 0.78);
+    box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.95),
+        inset -1px -1px 1px rgba(255, 255, 255, 0.55),
+        0 10px 30px rgba(55, 70, 105, 0.14);
+}
+
+/*
+ * Navigation and controls float as glass. The large data surface is quieter and more opaque,
+ * protecting readability instead of making every layer equally glassy.
+ */
+.light-theme .navbar {
+    border-radius: 22px;
+}
+
+.light-theme .glass-panel {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.34));
+    border-radius: 22px;
+}
+
+.light-theme .brand,
+.light-theme .theme-toggle {
+    color: #202632;
+}
+
+.light-theme .navbar span,
+.light-theme .page-header p,
+.light-theme .table-footer,
+.light-theme th {
+    color: #435066;
+}
+
+.light-theme .table-container,
+.light-theme .form-group input,
+.light-theme .form-group textarea {
+    color: #202632;
+    /*
+ * Subtle neutral surfaces avoid the old blue-tinted box appearance.
+ */
+    background: rgba(255, 255, 255, 0.32);
+    border-color: rgba(85, 103, 137, 0.2);
+    caret-color: #1859d9;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.light-theme th {
+    background: rgba(210, 219, 238, 0.2);
+}
+
+.light-theme th,
+.light-theme td {
+    border-bottom-color: rgba(75, 105, 145, 0.18);
+}
+
+.light-theme tbody tr:hover {
+    background: rgba(209, 224, 245, 0.5);
+}
+
+/*
+ * A matching silver scrollbar keeps the light table from retaining a dark track.
+ */
+.light-theme .table-container {
+    scrollbar-color: #8695ab #e5ebf4;
+}
+
+.light-theme .table-footer {
+    background: rgba(213, 223, 239, 0.22);
+}
+
+.light-theme .theme-toggle:hover {
+    color: #1357c5;
+}
+
+/*
+ * A small round glass control follows the theme's floating navigation treatment.
+ */
+.light-theme .theme-toggle {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.22));
+    box-shadow: inset 0 1px 1px #ffffff, 0 3px 8px rgba(55, 70, 105, 0.12);
+}
+
+/*
+ * Keep the main action blue in both themes, with the same glossy top highlight. White button
+ * text stays legible because the bottom blue remains dark.
+ */
+.light-theme .button-primary {
+    background: linear-gradient(165deg, #206cce, #163cae);
+    border-color: #437ed0;
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.35),
+        0 5px 14px rgba(40, 65, 110, 0.16);
+}
+
+.light-theme .button-primary:hover {
+    background: linear-gradient(165deg, #2877dc, #1a46ba);
+}
+
+.light-theme .actions form {
+    border-left-color: #a5b0c2;
+}
+
+.light-theme .edit-link {
+    color: #1357c5;
+}
+
+.light-theme .delete-button {
+    color: #b82f29;
+}
+
+.light-theme .success-message {
+    color: #17613b;
+    background: linear-gradient(110deg, rgba(218, 244, 229, 0.86), rgba(229, 246, 237, 0.55));
+    border-color: #73a58a;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.65);
+}
+
+.light-theme .error-message {
+    color: #9e2925;
+    background: linear-gradient(110deg, rgba(250, 220, 216, 0.86), rgba(253, 239, 236, 0.6));
+    border-color: #c98680;
+}
+
+.light-theme .button-secondary {
+    color: #263249;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.8), rgba(210, 221, 238, 0.65));
+    border-color: #a5b0c2;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9),
+        0 3px 8px rgba(40, 55, 80, 0.08);
+}
+
+.light-theme .button-secondary:hover {
+    background: linear-gradient(160deg, #f7f9fd, #cbd8eb);
+}
+
+.light-theme a:focus-visible,
+.light-theme button:focus-visible,
+.light-theme .form-group input:focus,
+.light-theme .form-group textarea:focus {
+    outline-color: #1859d9;
+}
