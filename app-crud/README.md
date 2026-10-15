@@ -1,3 +1,12 @@
+# Application reading entry point
+
+This folder contains the Laravel application. Start with
+[the beginner learning pack](../docs/START_HERE.md) and
+[the application file map](../docs/CODE_MAP.md).
+The workspace [README](../README.md) contains project setup instructions.
+
+The Laravel information below is the generated framework README, kept for reference.
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

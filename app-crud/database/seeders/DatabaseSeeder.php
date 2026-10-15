@@ -1,5 +1,9 @@
 <?php
 
+// Optional sample-data entry point for db:seed. Do not run it just to view the application;
+// normal registration and product forms create records through controllers.
+
+
 namespace Database\Seeders;
 
 use App\Models\User;

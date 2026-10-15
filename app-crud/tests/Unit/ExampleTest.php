@@ -1,5 +1,9 @@
 <?php
 
+// Generated simple assertion example. A unit test checks a small piece of behavior; this sample
+// does not exercise HTTP routes or a real database.
+
+
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;

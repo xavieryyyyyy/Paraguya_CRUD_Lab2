@@ -1,8 +1,12 @@
 @php
+    // Product form that posts with a hidden PUT method to product.update. Route binding
+    // supplies the selected record; old(field, savedValue) chooses submitted or stored data.
+@endphp
+@php
     // UPDATE FORM: Display the selected record and submit changes. Use the shared layout and
     // the same form CSS as the other pages.
 @endphp
-@extends('layouts.app')
+@extends('layouts.product')
 
 @php
     // Fill the shared layout browser-title slot.

@@ -1,5 +1,9 @@
 <?php
 
+// Startup extension point registered in bootstrap/providers.php. register() can bind services;
+// boot() runs after registration. Both are empty here because the labs use Laravel defaults.
+
+
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;

@@ -1,6 +1,11 @@
 #!/usr/bin/env php
 <?php
 
+// Terminal entry point. PHP loads the same application bootstrap used by web requests, but
+// handles an Artisan command such as serve, migrate, or route:list instead of returning a
+// browser page.
+
+
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 

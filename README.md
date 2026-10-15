@@ -1,12 +1,19 @@
-# Laboratory 2 - Laravel Product CRUD
+# Laboratories 2 and 3 - Laravel Product Manager
 
 A student Laravel MVC application for creating, listing, updating, and deleting
-products. Laboratory 3 will continue this same application with authentication.
+products, with Breeze registration, login/logout, and password recovery.
+
+## Study this project
+
+Open [docs/START_HERE.md](docs/START_HERE.md) for the current beginner learning pack.
+It links to the complete syntax/request-flow guide, a file-by-file map, all eight
+Lab 3 answers, practice exercises, and a verification report. The older Lab 2
+guide remains available as checkpoint documentation.
 
 ## Project structure
 
 - `app-crud/` - the Laravel application; run Artisan and Composer from this folder.
-- `LAB2_STUDY_GUIDE.md` - explanation of MVC, database fields, routes, validation,
+- `output/LAB2_STUDY_GUIDE.md` - explanation of MVC, database fields, routes, validation,
   setup, demonstration steps, and practice questions.
 - `output/pdf/LAB2_STUDY_GUIDE.pdf` - printable study guide.
 - `PRODUCT.md` - confirmed project scope and student-code requirements.
@@ -20,21 +27,24 @@ products. Laboratory 3 will continue this same application with authentication.
 - Shared Blade layout, responsive table/forms, inline SVG icons, Inter typography,
   and a light/dark theme switch using plain CSS and JavaScript.
 
-This Lab 2 checkpoint has no registration, login, or authentication middleware.
-Those features belong to the next laboratory. The application is for local coursework.
+The historical `lab2-complete` checkpoint has no authentication. The current
+working application adds Breeze and protects all six product routes with auth.
+It is for local coursework; no admin roles or product ownership policies are implemented.
 
 ## Local requirements
 
 PHP 8.2 or compatible, Composer, and a MySQL-compatible database. The development
 machine uses XAMPP PHP 8.2.12, MariaDB, and database port 3307. Other machines may
-use a different database port. Node.js/npm are needed for the upcoming Breeze
-frontend build; the current Lab 2 pages load plain CSS/JavaScript directly.
+use a different database port. Node.js/npm are needed for the Breeze
+frontend build; custom product/auth CSS and JavaScript are also loaded directly.
 
 ## Run a cloned copy (Windows PowerShell)
 
 ```powershell
 cd app-crud
 composer install
+npm ci
+npm run build
 Copy-Item .env.example .env
 & "C:\xampp\php\php.exe" artisan key:generate
 ```

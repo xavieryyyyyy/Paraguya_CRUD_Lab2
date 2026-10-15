@@ -1,5 +1,9 @@
 <?php
 
+// Creates queued-job, batch, and failed-job tables. These support background jobs; our reset
+// notification is sent synchronously in the current flow.
+
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

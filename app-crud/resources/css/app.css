@@ -1,19 +1,8 @@
 /*
- * Laravel scaffold for a Tailwind/Vite asset pipeline. Our layout instead links
- * public/css/style.css directly, so changing this file does not style the CRUD pages.
- * @import loads Tailwind; @source marks template locations for class detection; @theme
- * declares Tailwind theme tokens. No Vite build is needed for the plain CSS.
+ * Tailwind source compiled by Vite. Dashboard/Profile use this build; the guest layout loads it
+ * as well, followed by custom styles that control the four redesigned forms.
  */
-@import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*
- * .blade.php'; @source '../../storage/framework/views/*.php'; @source '../*
- */*.blade.php';
-@source '../*
- * No additional code is needed in this generated section for the CRUD lab.
- */*.js';
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

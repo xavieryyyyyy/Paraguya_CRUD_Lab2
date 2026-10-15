@@ -1,5 +1,10 @@
 <?php
 
+// Application setup. Registers routes/web.php, routes/console.php, and the health endpoint.
+// Laravel supplies its default middleware; named auth/guest middleware is applied in the route
+// files.
+
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

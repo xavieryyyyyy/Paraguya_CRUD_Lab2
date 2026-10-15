@@ -1,5 +1,9 @@
 <?php
 
+// Creates database cache/lock tables. Laravel can use these for cached values and rate limiting
+// when the configured cache store is database.
+
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

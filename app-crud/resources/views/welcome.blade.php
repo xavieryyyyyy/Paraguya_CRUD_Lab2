@@ -1,3 +1,7 @@
+@php
+    // Original Laravel welcome template retained as scaffold. The current home route redirects
+    // to Login/Products instead, so it does not render this page.
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>

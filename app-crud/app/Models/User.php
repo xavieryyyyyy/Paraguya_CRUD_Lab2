@@ -1,5 +1,10 @@
 <?php
 
+// User model for the users table. Authentication uses this class to load accounts. HasFactory
+// creates test users; Notifiable sends reset/verification notifications. Email verification is
+// not enforced because this class does not implement MustVerifyEmail.
+
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -29,6 +34,9 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    // Hide these attributes when the model is converted to arrays/JSON. This does not remove
+    // the columns or encrypt stored data; Hash::make and the hashed cast protect password
+    // storage.
     protected $hidden = [
         'password',
         'remember_token',
@@ -39,6 +47,9 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    // Convert stored attributes to useful PHP values: verified time becomes a date object;
+    // assigned passwords are hashed. Access level remains protected because Eloquent calls the
+    // cast configuration internally.
     protected function casts(): array
     {
         return [

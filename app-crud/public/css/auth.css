@@ -1,0 +1,321 @@
+/*
+ * Authentication-specific styles loaded after style.css. Centers guest forms, handles field
+ * icons/Show-Hide controls, checkbox layout, errors, and contrasting primary buttons in both
+ * themes.
+ */
+
+/*
+ * Authentication pages reuse the background, glass panels, Inter font,
+ * and theme button from style.css. These rules style their form content.
+ */
+.auth-page {
+    min-height: 100vh;
+}
+
+/* Center the panel while leaving room for the navbar and footer. */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 240px);
+    padding: 32px 0;
+}
+
+/* Limit form width so fields remain comfortable to read on desktop. */
+.auth-card {
+    width: 100%;
+    max-width: 460px;
+    margin: 0;
+    padding: 36px;
+}
+
+.auth-card h1 {
+    margin-bottom: 8px;
+    font-size: 32px;
+}
+
+.auth-description {
+    margin: 0 0 28px;
+    color: #c1c7d2;
+}
+
+/* Separate each label and input group from the next one. */
+.auth-field {
+    margin-bottom: 20px;
+}
+
+.auth-card label {
+    display: block;
+    margin-bottom: 8px;
+    color: #f5f5f7;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Exclude checkboxes: only text-like fields should fill the panel width. */
+.auth-card input:not([type="checkbox"]):not([type="hidden"]) {
+    display: block;
+    width: 100%;
+    padding: 13px 14px;
+    color: #f5f5f7;
+    background: rgba(13, 15, 20, 0.65);
+    border: 1px solid #657080;
+    border-radius: 10px;
+    font: inherit;
+}
+
+.auth-card input::placeholder {
+    color: #aeb8c8;
+}
+
+/* Highlight the active field for mouse and keyboard users. */
+.auth-card input:focus {
+    outline: 2px solid #cbd5e1;
+    outline-offset: 2px;
+}
+
+/* Keep Remember me and Forgot password together when space allows. */
+.auth-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.auth-card .remember-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    min-height: 32px;
+    cursor: pointer;
+}
+
+.auth-card input[type="checkbox"] {
+    /* Restore the native checkmark instead of Breeze's unstyled white square.
+       The whole label is clickable, and Space toggles the focused checkbox. */
+    appearance: auto;
+    -webkit-appearance: auto;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    background: none;
+    box-shadow: none;
+    accent-color: #e5e7eb;
+    cursor: pointer;
+}
+
+/* Silver links match the approved black-and-white authentication theme. */
+.auth-card a {
+    color: #e5e7eb;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.auth-card a:hover {
+    color: #ffffff;
+}
+
+/* Pearl-white main action against dark glass. */
+.auth-submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 18px;
+    color: #181b20;
+    background: linear-gradient(160deg, #ffffff, #d7dce4);
+    border: 1px solid #f1f5f9;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 2px #ffffff,
+                0 5px 14px rgba(0, 0, 0, 0.2);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.auth-submit:hover {
+    background: linear-gradient(160deg, #ffffff, #e8ecf2);
+}
+
+/* Secondary navigation below the form's main action. */
+.auth-bottom {
+    margin-top: 24px;
+    text-align: center;
+    color: #c1c7d2;
+    font-size: 14px;
+}
+
+.auth-footer {
+    padding: 16px 0;
+    text-align: center;
+    color: #c1c7d2;
+    font-size: 13px;
+}
+
+/* Display server feedback without depending on color alone. */
+.auth-error {
+    margin-top: 6px;
+    color: #ffb4ad;
+    font-size: 13px;
+}
+
+.auth-status {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    color: #9cf0bc;
+    background: rgba(20, 85, 49, 0.3);
+    border: 1px solid #367c54;
+    border-radius: 10px;
+}
+
+/* Light mode keeps the same structure but reverses the button contrast. */
+.light-theme .auth-card label {
+    color: #202632;
+}
+
+.light-theme .auth-description,
+.light-theme .auth-bottom,
+.light-theme .auth-footer {
+    color: #435066;
+}
+
+.light-theme .auth-card input:not([type="checkbox"]):not([type="hidden"]) {
+    color: #202632;
+    background: rgba(255, 255, 255, 0.4);
+    border-color: #8793a5;
+}
+
+.light-theme .auth-card input::placeholder {
+    color: #59677c;
+}
+
+.light-theme .auth-card input:focus {
+    outline-color: #435066;
+}
+
+.light-theme .auth-card input[type="checkbox"] {
+    accent-color: #30343e;
+}
+
+.light-theme .auth-card a {
+    color: #303b4e;
+}
+
+.light-theme .auth-card a:hover {
+    color: #111827;
+}
+
+.light-theme .auth-submit {
+    color: #ffffff;
+    background: linear-gradient(160deg, #383e49, #171b22);
+    border-color: #4d5665;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15),
+                0 5px 14px rgba(40, 55, 80, 0.15);
+}
+
+.light-theme .auth-submit:hover {
+    background: linear-gradient(160deg, #454d5a, #252b35);
+}
+
+.light-theme .auth-error {
+    color: #9e2925;
+}
+
+.light-theme .auth-status {
+    color: #17613b;
+    background: rgba(218, 244, 229, 0.8);
+    border-color: #73a58a;
+}
+
+/* Reduce padding on small screens without squeezing the input fields. */
+@media (max-width: 600px) {
+    .auth-container {
+        min-height: auto;
+        padding: 16px 0;
+    }
+
+    .auth-card {
+        padding: 24px;
+    }
+
+    .auth-card h1 {
+        font-size: 28px;
+    }
+}
+
+/*
+ * Position the icon relative to its field wrapper.
+ * Extra left padding prevents typed text from overlapping the icon.
+ */
+.auth-input {
+    position: relative;
+}
+
+.auth-input > .icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #c1c7d2;
+    pointer-events: none;
+}
+
+.auth-card .auth-input input:not([type="checkbox"]):not([type="hidden"]) {
+    padding-left: 44px;
+}
+
+/* A darker icon stays visible against the light-theme input. */
+.light-theme .auth-input > .icon {
+    color: #435066;
+}
+
+/* Reserve room for Show/Hide even when the input switches from password to text.
+   Selecting by wrapper keeps the field width and icon alignment unchanged. */
+.auth-card .has-password-toggle input:not([type="checkbox"]):not([type="hidden"]) {
+    padding-right: 72px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    min-width: 52px;
+    min-height: 36px;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #e5e7eb;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.password-toggle:focus-visible {
+    outline: 2px solid #cbd5e1;
+    outline-offset: 1px;
+}
+
+.light-theme .password-toggle {
+    color: #303b4e;
+}
+
+.light-theme .password-toggle:hover {
+    background: rgba(35, 45, 65, 0.08);
+}
+
+.light-theme .password-toggle:focus-visible {
+    outline-color: #435066;
+}

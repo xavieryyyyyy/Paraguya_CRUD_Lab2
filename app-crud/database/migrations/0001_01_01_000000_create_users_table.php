@@ -1,5 +1,9 @@
 <?php
 
+// Creates users, password_reset_tokens, and sessions. User/auth controllers use users; the
+// password broker uses reset tokens; the configured database session driver uses sessions.
+
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

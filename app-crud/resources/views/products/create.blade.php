@@ -1,8 +1,12 @@
 @php
+    // Product form that posts to product.store. Field names match controller validation. old()
+    // restores failed submissions; errors remain visible. Extends layouts.product.
+@endphp
+@php
     // CREATE FORM: Collect values for a new product; saving occurs in the controller. Use the
     // shared layout and the same form CSS as the other pages.
 @endphp
-@extends('layouts.app')
+@extends('layouts.product')
 
 @php
     // Fill the shared layout browser-title slot.

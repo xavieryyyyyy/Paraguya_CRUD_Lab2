@@ -1,2 +1,4 @@
+# Crawler guidance only. It is not login protection and does not prevent access to a known URL;
+# auth middleware protects product routes.
 User-agent: *
 Disallow:

@@ -1,27 +1,15 @@
 <?php
 
+// Database connections and migration/cache configuration. .env selects the mysql connection to
+// XAMPP MariaDB; tests use isolated in-memory SQLite.
+
 use Illuminate\Support\Str;
 use Pdo\Mysql;
 
 return [
 
-    // Use this section for the behavior explained below.
-    // |-------------------------------------------------------------------------- | Default
-    // Database Connection Name
-    // |-------------------------------------------------------------------------- | | Here you
-    // may specify which of the database connections below you wish | to use as your default
-    // connection for database operations. This is | the connection which will be utilized
-    // unless another connection | is explicitly specified when you execute a query / statement.
-    // |
-
+    // DB_CONNECTION selects one of the named connections below; the lab uses mysql.
     'default' => env('DB_CONNECTION', 'sqlite'),
-
-    // Use this section for the behavior explained below.
-    // |-------------------------------------------------------------------------- | Database
-    // Connections |-------------------------------------------------------------------------- |
-    // | Below are all of the database connections defined for your application. | An example
-    // configuration is provided for each database system which | is supported by Laravel.
-    // You're free to add / remove connections. |
 
     'connections' => [
 
@@ -37,6 +25,8 @@ return [
             'transaction_mode' => 'DEFERRED',
         ],
 
+        // Connect to XAMPP MariaDB using DB_HOST/PORT/DATABASE/USERNAME/PASSWORD.
+        // These defaults are templates; the real secrets remain in the ignored .env.
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
@@ -109,25 +99,10 @@ return [
 
     ],
 
-    // Use this section for the behavior explained below.
-    // |-------------------------------------------------------------------------- | Migration
-    // Repository Table
-    // |-------------------------------------------------------------------------- | | This
-    // table keeps track of all the migrations that have already run for | your application.
-    // Using this information, we can determine which of | the migrations on disk haven't
-    // actually been run on the database. |
-
     'migrations' => [
         'table' => 'migrations',
         'update_date_on_publish' => true,
     ],
-
-    // Use this section for the behavior explained below.
-    // |-------------------------------------------------------------------------- | Redis
-    // Databases |-------------------------------------------------------------------------- | |
-    // Redis is an open source, fast, and advanced key-value store that also | provides a richer
-    // body of commands than a typical key-value system | such as Memcached. You may define your
-    // connection settings here. |
 
     'redis' => [
 

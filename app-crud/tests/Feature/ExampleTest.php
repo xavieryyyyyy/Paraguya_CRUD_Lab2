@@ -1,5 +1,9 @@
 <?php
 
+// Checks the home route response. Home now redirects unauthenticated visitors to login, so the
+// expected response is a redirect rather than an HTML 200.
+
+
 namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,6 +18,6 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        $response->assertRedirect(route('login'));
     }
 }

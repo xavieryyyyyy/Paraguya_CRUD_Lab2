@@ -1,5 +1,10 @@
 <?php
 
+// CRUD coordinator called by the six protected product routes in routes/web.php. Reads and
+// validates input, calls the Product model, then returns a products view or a redirect with
+// success feedback.
+
+
 // CONTROLLER: Receive requests, ask the model to work with records, and choose a view or
 // redirect. Keep HTML in Blade views and table structure in migrations.
 namespace App\Http\Controllers;

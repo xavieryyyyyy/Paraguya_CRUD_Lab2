@@ -1,3 +1,5 @@
+# Apache rewrite rules that direct application URLs to public/index.php. Artisan serve uses its
+# own development routing, so this Apache file is not the primary server in our tests.
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes

@@ -1,5 +1,9 @@
 <?php
 
+// Creates products for the Product model. up() defines columns; down() drops the whole table on
+// rollback. A migration changes structure; it does not submit product form values.
+
+
 // MIGRATION: A versioned description of table structure, not a saved product. Migration is the
 // base class; Blueprint describes columns; Schema manages tables.
 use Illuminate\Database\Migrations\Migration;

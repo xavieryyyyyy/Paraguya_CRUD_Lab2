@@ -1,8 +1,12 @@
 @php
+    // ProductController::index passes $products here. Render rows, empty state, edit links, and
+    // CSRF-protected DELETE forms. The success banner is removed later by product-messages.js.
+@endphp
+@php
     // READ VIEW: The controller passes $products to this page. Extend the shared
     // resources/views/layouts/app.blade.php shell; sections below fill its yield slots.
 @endphp
-@extends('layouts.app')
+@extends('layouts.product')
 
 @php
     // Set the browser tab title; this is different from the visible h1 heading.
@@ -109,8 +113,7 @@
                         <td>
                             <div class="actions">
                                 @php
-                                    // Use this section for the behavior explained below.
-                                    // Passing the model lets route() place its route key,
+                                    //                                     // Passing the model lets route() place its route key,
                                     // normally id, into the URL. Clicking the link opens
                                     // edit(); the pencil does not perform the update.
                                 @endphp
@@ -128,8 +131,7 @@
                                 </a>
 
                                 @php
-                                    // Use this section for the behavior explained below.
-                                    // Deleting changes data, so use a form instead of a GET
+                                    //                                     // Deleting changes data, so use a form instead of a GET
                                     // link. HTML submits POST; @method below supplies a hidden
                                     // _method value for Laravel.
                                 @endphp
@@ -142,15 +144,13 @@
                                     @endphp
                                     @csrf
                                     @php
-                                        // Use this section for the behavior explained below.
-                                        // Laravel treats this POST form as DELETE so it matches
+                                        //                                         // Laravel treats this POST form as DELETE so it matches
                                         // product.destroy.
                                     @endphp
                                     @method('DELETE')
 
                                     @php
-                                        // Use this section for the behavior explained below.
-                                        // confirm() is browser JavaScript: OK returns true and
+                                        //                                         // confirm() is browser JavaScript: OK returns true and
                                         // submits; Cancel returns false and stops this
                                         // submission. It does not itself delete a record.
                                     @endphp

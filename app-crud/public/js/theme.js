@@ -1,3 +1,6 @@
+// Appearance-only code loaded with defer by product/guest layouts. A click toggles light-theme
+// on body and saves the browser choice in localStorage; it does not change account permissions.
+
 // Theme control: use one body class to select the light CSS rules. Dark is the default,
 // matching the approved charcoal reference.
 const themeButton = document.getElementById('theme-toggle');

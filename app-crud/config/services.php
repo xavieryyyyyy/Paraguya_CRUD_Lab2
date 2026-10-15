@@ -1,14 +1,9 @@
 <?php
 
-return [
+// Optional third-party integration settings. The current reset email uses SMTP config rather
+// than these optional service transports.
 
-    // Use this section for the behavior explained below.
-    // |-------------------------------------------------------------------------- | Third Party
-    // Services |-------------------------------------------------------------------------- | |
-    // This file is for storing the credentials for third party services such | as Mailgun,
-    // Postmark, AWS and more. This file provides the de facto | location for this type of
-    // information, allowing packages to have | a conventional file to locate the various
-    // service credentials. |
+return [
 
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),

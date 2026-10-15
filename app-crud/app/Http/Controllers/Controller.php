@@ -1,5 +1,9 @@
 <?php
 
+// Shared parent of the application controllers. Concrete controllers contain the request
+// methods; this empty abstract class keeps a common place for future shared behavior.
+
+
 namespace App\Http\Controllers;
 
 // Laravel scaffold: the shared parent of the ProductController. abstract means it is a base for

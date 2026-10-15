@@ -1,5 +1,10 @@
 <?php
 
+// Product model for the products table. ProductController uses all(), create(), update(), and
+// delete() inherited from Eloquent. The products migration defines columns; this model works
+// with the rows.
+
+
 // MODEL: This class represents product records. The namespace tells PHP where the class
 // belongs; it is not the location of the database itself.
 namespace App\Models;

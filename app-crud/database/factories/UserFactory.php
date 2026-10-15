@@ -1,5 +1,9 @@
 <?php
 
+// Creates fake User data for tests. Factory users are test fixtures; fake values do not
+// register real users or send real email during the test suite.
+
+
 namespace Database\Factories;
 
 use App\Models\User;
