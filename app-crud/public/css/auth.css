@@ -109,14 +109,14 @@
     cursor: pointer;
 }
 
-/* Silver links match the approved black-and-white authentication theme. */
-.auth-card a {
+/* Text links use the auth palette. Action links keep their button colors. */
+.auth-card a:where(:not(.button)) {
     color: #e5e7eb;
     text-decoration: underline;
     text-underline-offset: 3px;
 }
 
-.auth-card a:hover {
+.auth-card a:where(:not(.button)):hover {
     color: #ffffff;
 }
 
@@ -203,11 +203,11 @@
     accent-color: #30343e;
 }
 
-.light-theme .auth-card a {
+.light-theme .auth-card a:where(:not(.button)) {
     color: #303b4e;
 }
 
-.light-theme .auth-card a:hover {
+.light-theme .auth-card a:where(:not(.button)):hover {
     color: #111827;
 }
 

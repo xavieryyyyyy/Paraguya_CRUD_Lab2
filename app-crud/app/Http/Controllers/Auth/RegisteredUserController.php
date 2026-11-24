@@ -1,8 +1,7 @@
 <?php
 
 // Registration controller for GET/POST register. Validates account details, creates a User with
-// a password hash, fires Registered, signs in that user, then redirects to Dashboard.
-// Registration currently has a different default destination from login.
+// a password hash, fires Registered, and sends the new user to the login form.
 
 
 namespace App\Http\Controllers\Auth;
@@ -12,7 +11,6 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
@@ -58,11 +56,9 @@ class RegisteredUserController extends Controller
         // which is currently absent.
         event(new Registered($user));
 
-        // Sign in the newly created user automatically. This registration flow currently
-        // returns Dashboard; AuthenticatedSessionController handles the separate login redirect
-        // to Products.
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        // Prefill the email on Login and leave the account signed out until credentials are entered.
+        return redirect(route('login', absolute: false))
+            ->with('status', 'Account created. Sign in to continue.')
+            ->withInput(['email' => $user->email]);
     }
 }

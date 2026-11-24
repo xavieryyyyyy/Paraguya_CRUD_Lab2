@@ -46,7 +46,7 @@
         </a>
 
         <div class="navbar-tools">
-            <span>Laboratory 3</span>
+            <span>Laboratory 4</span>
 
             @php
                 // Reuse the existing theme script and its expected button ID.
@@ -88,7 +88,7 @@
     </main>
 
     <footer class="auth-footer">
-        Product Manager &middot; Laboratory 3
+        Product Manager &middot; Laboratory 4
     </footer>
 
     <script src="{{ asset('js/theme.js') }}" defer></script>

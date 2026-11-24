@@ -1,7 +1,6 @@
 <?php
 
-// Exercises registration display and valid account creation. Registration still redirects to
-// Dashboard; new validation checks reject duplicate email and mismatched passwords.
+// Exercises registration display, account creation, and the separate sign-in step.
 
 
 namespace Tests\Feature\Auth;
@@ -29,7 +28,16 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
+        $this->assertGuest();
+        $response->assertRedirect(route('login', absolute: false));
+        $response->assertSessionHasInput('email', 'test@example.com');
+        $response->assertSessionMissing('_old_input.password');
+        $this->get('/login')->assertOk()->assertSee('Account created. Sign in to continue.');
+
+        $this->post('/login', [
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ])->assertRedirect(route('product.index', absolute: false));
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
     }
 }
