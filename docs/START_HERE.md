@@ -43,7 +43,7 @@ passwords, application keys, session cookies, or reset tokens.
 | Open `/` while signed in | Redirect to Products |
 | Successful login | Intended protected page, otherwise Products |
 | Logout | Session cleared; redirect to Login |
-| Successful registration | Automatically signed in; Dashboard |
+| Successful registration (Lab 4) | Login with a confirmation message and the email prefilled |
 | Successful password reset | Login with reset-success status |
 | Guest requests a product route | Login required |
 | Signed-in user requests products | Shared product data is accessible |

@@ -1,7 +1,9 @@
-# Laboratories 2 and 3 - Laravel Product Manager
+# Laboratories 2–4 - Laravel Product Manager
 
 A student Laravel MVC application for creating, listing, updating, and deleting
-products, with Breeze registration, login/logout, and password recovery.
+products, with Breeze accounts, admin permissions, product images, and search.
+
+For Lab 4 setup, demonstration steps, and test results, see the [Lab 4 report](docs/LAB4_REPORT.md).
 
 ## Study this project
 
@@ -27,9 +29,9 @@ guide remains available as checkpoint documentation.
 - Shared Blade layout, responsive table/forms, inline SVG icons, Inter typography,
   and a light/dark theme switch using plain CSS and JavaScript.
 
-The historical `lab2-complete` checkpoint has no authentication. The current
-working application adds Breeze and protects all six product routes with auth.
-It is for local coursework; no admin roles or product ownership policies are implemented.
+The `lab2-complete` checkpoint preserves the original CRUD app. The `lab3-complete`
+checkpoint adds Breeze authentication. Lab 4 allows signed-in users to browse products
+and gives product management permissions to admins.
 
 ## Local requirements
 
@@ -60,6 +62,7 @@ The committed `.env.example` contains defaults only, with an empty application k
 ```powershell
 & "C:\xampp\php\php.exe" artisan config:clear
 & "C:\xampp\php\php.exe" artisan migrate
+& "C:\xampp\php\php.exe" artisan storage:link
 & "C:\xampp\php\php.exe" artisan serve
 ```
 
