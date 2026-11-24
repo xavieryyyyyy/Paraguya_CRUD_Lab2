@@ -51,60 +51,68 @@
     @endphp
     <form method="POST"
           action="{{ route('product.store') }}"
-          class="product-form">
+          class="product-form" enctype="multipart/form-data">
         @php
             // Laravel inserts a hidden CSRF token and verifies it before accepting this web
             // form.
         @endphp
         @csrf
 
-        @php
-            // A label for="name" matches input id="name", linking the label to its field.
-            // name="name" is the key the controller validates; id is primarily for labels and
-            // DOM targeting.
-        @endphp
-        <div class="form-group">
-            <label for="name">Name</label>
-            @php
-                // old(field) restores previous submitted input after server validation failure.
-                // maxlength=255 and required also help the browser check the name before
-                // submitting.
-            @endphp
-            <input type="text" id="name" name="name"
-                   maxlength="255" value="{{ old('name') }}" required>
-        </div>
+        <div class="product-form-grid">
+            <div class="product-form-fields">
+                @php
+                    // A label for="name" matches input id="name", linking the label to its field.
+                    // name="name" is the key the controller validates; id is primarily for labels and
+                    // DOM targeting.
+                @endphp
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    @php
+                        // old(field) restores previous submitted input after server validation failure.
+                        // maxlength=255 and required also help the browser check the name before
+                        // submitting.
+                    @endphp
+                    <input type="text" id="name" name="name"
+                           maxlength="255" value="{{ old('name') }}" required>
+                </div>
 
-        <div class="form-group">
-            @php
-                // min=0 rejects negatives in the browser; step=1 requests whole-number
-                // quantities. The controller must check again because browser restrictions can
-                // be bypassed.
-            @endphp
-            <label for="qty">Quantity</label>
-            <input type="number" id="qty" name="qty"
-                   min="0" step="1" value="{{ old('qty') }}" required>
-        </div>
+                <div class="product-form-pair">
+                    <div class="form-group">
+                        @php
+                            // min=0 rejects negatives in the browser; step=1 requests whole-number
+                            // quantities. The controller must check again because browser restrictions can
+                            // be bypassed.
+                        @endphp
+                        <label for="qty">Stock</label>
+                        <input type="number" id="qty" name="qty"
+                               min="0" step="1" value="{{ old('qty') }}" required>
+                    </div>
 
-        <div class="form-group">
-            @php
-                // step=0.01 accepts increments of one cent. max matches decimal(8, 2). These
-                // are browser checks; Laravel numeric/min/max/decimal rules enforce server
-                // checks.
-            @endphp
-            <label for="price">Price</label>
-            <input type="number" id="price" name="price"
-                   min="0" max="999999.99" step="0.01"
-                   value="{{ old('price') }}" required>
-        </div>
+                    <div class="form-group">
+                        @php
+                            // step=0.01 accepts increments of one cent. max matches decimal(8, 2). These
+                            // are browser checks; Laravel numeric/min/max/decimal rules enforce server
+                            // checks.
+                        @endphp
+                        <label for="price">Price</label>
+                        <input type="number" id="price" name="price"
+                               min="0" max="999999.99" step="0.01"
+                               value="{{ old('price') }}" required>
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @php
-                // Description is optional. textarea text goes between its opening and closing
-                // tags rather than in a value attribute. rows sets its initial visible height.
-            @endphp
-            <label for="description">Description (optional)</label>
-            <textarea id="description" name="description"
-                      rows="4">{{ old('description') }}</textarea>
+                <div class="form-group">
+                    @php
+                        // Description is optional. textarea text goes between its opening and closing
+                        // tags rather than in a value attribute. rows sets its initial visible height.
+                    @endphp
+                    <label for="description">Description (optional)</label>
+                    <textarea id="description" name="description"
+                              rows="4">{{ old('description') }}</textarea>
+                </div>
+            </div>
+
+            @include('products.image-field')
         </div>
 
         @php
@@ -112,14 +120,14 @@
             // not save changes. CSS wraps these controls on narrow screens.
         @endphp
         <div class="form-actions">
-            <button type="submit" class="button button-primary">
-                Save Product
-            </button>
-
             <a href="{{ route('product.index') }}"
                class="button button-secondary">
                 Cancel
             </a>
+
+            <button type="submit" class="button button-primary">
+                Save Product
+            </button>
         </div>
     </form>
 @php

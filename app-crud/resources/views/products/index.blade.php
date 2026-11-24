@@ -4,7 +4,7 @@
 @endphp
 @php
     // READ VIEW: The controller passes $products to this page. Extend the shared
-    // resources/views/layouts/app.blade.php shell; sections below fill its yield slots.
+    // resources/views/layouts/product.blade.php shell; sections below fill its yield slots.
 @endphp
 @extends('layouts.product')
 
@@ -23,7 +23,7 @@
     <div class="page-header">
         <div>
             <h1>Products</h1>
-            <p>Manage your product records.</p>
+            <p>Browse the product catalog.</p>
         </div>
 
         @php
@@ -31,6 +31,7 @@
             // SVG icons use the same hollow stroke style and inherit the surrounding text
             // color.
         @endphp
+        @can('create', App\Models\Product::class)
         <a href="{{ route('product.create') }}" class="button button-primary">
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg"
          viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -42,7 +43,23 @@
 
     Add Product
         </a>
+        @endcan
     </div>
+
+    <form method="GET" action="{{ route('product.index') }}" class="product-search">
+        <div class="form-group">
+            <label for="search">Search by product name</label>
+            <input type="search" id="search" name="search" value="{{ $search }}" maxlength="255"
+                   placeholder="Enter a product name">
+        </div>
+        <button type="submit" class="button button-secondary">Search</button>
+        @if ($search !== '')
+            <a href="{{ route('product.index') }}" class="catalog-clear">Clear search</a>
+        @endif
+    </form>
+    @error('search')
+        <p class="error-message" role="alert">{{ $message }}</p>
+    @enderror
 
     @php
         // Only show this message when the controller flashed success to the session. It is
@@ -71,7 +88,7 @@
         // fits the screen.
     @endphp
     <div class="table-container">
-        <table>
+        <table class="catalog-table">
             @php
                 // thead contains column labels; tbody below contains the actual database
                 // values.
@@ -79,19 +96,20 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Image</th>
                     <th>Name</th>
-                    <th>Quantity</th>
+                    <th>Stock</th>
                     <th>Price</th>
                     <th>Description</th>
-                    <th>Actions</th>
+                    @can('create', App\Models\Product::class)
+                        <th>Actions</th>
+                    @endcan
                 </tr>
             </thead>
 
             <tbody>
                 @php
-                    // Loop over the Collection. On each iteration $product is one Product
-                    // object. If the Collection is empty, Laravel displays the @empty block
-                    // instead.
+                    // Loop over the products on the current page.
                 @endphp
                 @forelse ($products as $product)
                     <tr>
@@ -101,7 +119,18 @@
                             // markup.
                         @endphp
                         <td>{{ $product->id }}</td>
-                        <td>{{ $product->name }}</td>
+                        <td class="catalog-image-cell">
+                            @php
+                                $imageUrl = $product->imageUrl();
+                            @endphp
+                            @if ($imageUrl)
+                                <img class="product-thumbnail" src="{{ $imageUrl }}"
+                                     alt="" width="56" height="56" loading="lazy">
+                            @else
+                                <span class="product-thumbnail catalog-no-image">No image</span>
+                            @endif
+                        </td>
+                        <td class="catalog-name-cell"><a class="catalog-product-name" href="{{ route('product.show', $product) }}">{{ $product->name }}</a></td>
                         <td>{{ $product->qty }}</td>
                         @php
                             // Format price for display with two decimals, e.g. 25 becomes
@@ -110,6 +139,7 @@
                         @endphp
                         <td>{{ number_format($product->price, 2) }}</td>
                         <td>{{ $product->description }}</td>
+                        @can('create', App\Models\Product::class)
                         <td>
                             <div class="actions">
                                 @php
@@ -117,6 +147,7 @@
                                     // normally id, into the URL. Clicking the link opens
                                     // edit(); the pencil does not perform the update.
                                 @endphp
+                                @can('update', $product)
                                 <a href="{{ route('product.edit', $product) }}"
                                    class="edit-link">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg"
@@ -129,12 +160,14 @@
 
     Edit
                                 </a>
+                                @endcan
 
                                 @php
                                     //                                     // Deleting changes data, so use a form instead of a GET
                                     // link. HTML submits POST; @method below supplies a hidden
                                     // _method value for Laravel.
                                 @endphp
+                                @can('delete', $product)
                                 <form method="POST"
                                       action="{{ route('product.destroy', $product) }}">
                                     @php
@@ -170,29 +203,40 @@
     Delete
                                     </button>
                                 </form>
+                                @endcan
                             </div>
                         </td>
+                        @endcan
                     </tr>
-                @php
-                    // colspan="6" spans all six columns for a single empty-state message.
-                @endphp
                 @empty
                     <tr>
-                        <td colspan="6">No products yet.</td>
+                        <td colspan="{{ auth()->user()->can('create', App\Models\Product::class) ? 7 : 6 }}">
+                            {{ $search === '' ? 'No products on this page.' : 'No products match this search on this page.' }}
+                        </td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
 
         @php
-            // count() counts loaded products. The ternary expression condition ? yes : no
-            // selects product for exactly one row and products for every other count.
+            // total() counts matching products across all pages.
         @endphp
         <p class="table-footer">
-            {{ $products->count() }}
-            {{ $products->count() === 1 ? 'product' : 'products' }}
+            {{ $products->total() }}
+            {{ $products->total() === 1 ? 'product' : 'products' }}
         </p>
     </div>
+    @if ($products->hasPages())
+        <nav class="product-pages" aria-label="Product pages">
+            @if ($products->previousPageUrl())
+                <a class="button button-secondary" href="{{ $products->previousPageUrl() }}">Previous</a>
+            @endif
+            <span>Page {{ $products->currentPage() }} of {{ $products->lastPage() }}</span>
+            @if ($products->nextPageUrl())
+                <a class="button button-secondary" href="{{ $products->nextPageUrl() }}">Next</a>
+            @endif
+        </nav>
+    @endif
 @php
     // Close the content section that the layout renders.
 @endphp

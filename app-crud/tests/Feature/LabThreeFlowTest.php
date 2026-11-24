@@ -20,7 +20,7 @@ class LabThreeFlowTest extends TestCase
         $this->actingAs($user)->get('/')->assertRedirect(route('product.index'));
     }
 
-    public function test_all_six_product_endpoints_require_login(): void
+    public function test_all_product_endpoints_require_login(): void
     {
         $product = Product::create([
             'name' => 'Test Apple', 'qty' => 2, 'price' => '10.00', 'description' => null,
@@ -29,6 +29,7 @@ class LabThreeFlowTest extends TestCase
         // Check display and write endpoints. A guest must not reach any controller action.
         $this->get('/product')->assertRedirect(route('login'));
         $this->get('/product/create')->assertRedirect(route('login'));
+        $this->get('/product/'.$product->id)->assertRedirect(route('login'));
         $this->get('/product/'.$product->id.'/edit')->assertRedirect(route('login'));
         $this->post('/product', ['name' => 'Blocked'])->assertRedirect(route('login'));
         $this->put('/product/'.$product->id, ['qty' => 99])->assertRedirect(route('login'));
@@ -41,11 +42,12 @@ class LabThreeFlowTest extends TestCase
 
     public function test_login_returns_to_the_original_protected_page(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['role' => 'admin']);
         $this->get('/product/create')->assertRedirect(route('login'));
         $this->post('/login', ['email' => $user->email, 'password' => 'password'])
             ->assertRedirect('/product/create');
         $this->assertAuthenticated();
+        $this->get('/product/create')->assertOk();
     }
 
     public function test_duplicate_email_and_mismatched_password_are_rejected(): void

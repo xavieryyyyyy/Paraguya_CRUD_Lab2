@@ -15,6 +15,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Models\Product;
 
 // Send guests to Login and authenticated users to the product list.
 Route::get('/', function () {
@@ -44,18 +45,27 @@ Route::middleware('auth')->group(function () {
         ->name('product.index');
 
     Route::get('/product/create', [ProductController::class, 'create'])
+        ->can('create', Product::class)
         ->name('product.create');
 
     Route::post('/product', [ProductController::class, 'store'])
+        ->can('create', Product::class)
         ->name('product.store');
 
+    // Keep the literal /create route above the route that takes a product ID.
+    Route::get('/product/{product}', [ProductController::class, 'show'])
+        ->name('product.show');
+
     Route::get('/product/{product}/edit', [ProductController::class, 'edit'])
+        ->can('update', 'product')
         ->name('product.edit');
 
     Route::put('/product/{product}', [ProductController::class, 'update'])
+        ->can('update', 'product')
         ->name('product.update');
 
     Route::delete('/product/{product}', [ProductController::class, 'destroy'])
+        ->can('delete', 'product')
         ->name('product.destroy');
 });
 

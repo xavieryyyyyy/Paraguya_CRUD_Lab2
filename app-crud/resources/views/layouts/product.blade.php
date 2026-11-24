@@ -78,7 +78,7 @@
             // changes appearance only; it never changes product records.
         @endphp
         <div class="navbar-tools">
-            <span>Laboratory 3</span>
+            <span>Laboratory 4</span>
             @auth
                 @php
                     // Logout changes the session, so use Breeze's POST route and CSRF token.
@@ -139,5 +139,6 @@
         // Keep this separate from theme switching so each script has one clear purpose.
     @endphp
     <script src="{{ asset('js/product-messages.js') }}" defer></script>
+    @stack('scripts')
 </body>
 </html>
